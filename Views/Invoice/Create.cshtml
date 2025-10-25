@@ -1,0 +1,102 @@
+﻿@model ExamApp.Models.Patientmaster
+@{
+    ViewBag.Title = "Create Invoice";
+}
+
+<h2>Create Invoice</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CustomerName)
+        @Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Salesman)
+        @Html.TextBoxFor(m => m.Salesman, new { @class = "form-control" })
+    </div>
+
+    <h4>Products</h4>
+
+    <table class="table table-bordered" id="productTable">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Strip Qty</th>
+                <th>Unit Qty</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <select name="ProductIds[0]" class="form-control">
+                        <option value="">Select Product</option>
+                        @foreach (var p in ViewBag.Products)
+                        {
+                            <option value="@p.Id">@p.MedicineName</option>
+                        }
+                    </select>
+                </td>
+                <td><input type="number" name="StripQuantities[0]" class="form-control" min="0" /></td>
+                <td><input type="number" name="UnitQuantities[0]" class="form-control" min="0" /></td>
+                <td><button type="button" class="btn btn-danger removeRow">Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="button" id="addRow" class="btn btn-success">Add Product</button>
+    <br />
+    <br />
+    <input type="submit" value="Save Invoice" class="btn btn-primary" />
+}
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var rowIndex = 1; // start from 1 because 0 is already in the table
+
+            // Add a single row
+            $('#addRow').click(function () {
+                var options = '';
+                @foreach (var p in ViewBag.Products)
+                {
+                    <text>
+                        options += '<option value="@p.Id">@p.MedicineName</option>';
+                    </text>
+                }
+
+                var newRow = `<tr>
+                    <td>
+                        <select name="ProductIds[${rowIndex}]" class="form-control">
+                            <option value="">Select Product</option>${options}
+                        </select>
+                    </td>
+                    <td><input type="number" name="StripQuantities[${rowIndex}]" class="form-control" min="0" /></td>
+                    <td><input type="number" name="UnitQuantities[${rowIndex}]" class="form-control" min="0" /></td>
+                    <td><button type="button" class="btn btn-danger removeRow">Delete</button></td>
+                </tr>`;
+
+                $('#productTable tbody').append(newRow);
+                rowIndex++;
+            });
+
+            // Delete row
+            $(document).on('click', '.removeRow', function () {
+                $(this).closest('tr').remove();
+
+                // Re-index input names
+                $('#productTable tbody tr').each(function (i, row) {
+                    $(row).find('select[name^="ProductIds"]').attr('name', `ProductIds[${i}]`);
+                    $(row).find('input[name^="StripQuantities"]').attr('name', `StripQuantities[${i}]`);
+                    $(row).find('input[name^="UnitQuantities"]').attr('name', `UnitQuantities[${i}]`);
+                });
+
+                rowIndex = $('#productTable tbody tr').length;
+            });
+        });
+    </script>
+}

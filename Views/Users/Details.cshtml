@@ -1,0 +1,48 @@
+﻿@model ExamApp.Models.User
+
+@{
+    ViewBag.Title = "Details";
+}
+<link href="~/Content/StyleSheet1.css" rel="stylesheet" type="text/css" />
+<h2>Details</h2>
+
+<!-- Print button -->
+<p>
+    <button id="printButton" class="btn btn-primary" onclick="window.print();">Print</button>
+</p>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+<!-- Hide print button when printing -->
+
+<script>
+    document.getElementById('printButton').addEventListener('click', function () {
+        window.print();
+    });
+</script>
+
+

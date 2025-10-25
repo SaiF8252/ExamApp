@@ -1,0 +1,42 @@
+﻿@model ExamApp.Models.Patientmaster
+
+<h4>Invoice Details</h4>
+<p><strong>Date:</strong> @Model.InvoiceDate.ToShortDateString()</p>
+<p><strong>Customer:</strong> @Model.CustomerName</p>
+<p><strong>Salesman:</strong> @Model.Salesman</p>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Product</th>
+            <th>Strip Qty</th>
+            <th>Unit Qty</th>
+            <th>Total</th>
+            <th>Total Invoice</th> <!-- This will span all rows -->
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int rowCount = Model.InvoiceDetails.Count();
+            int i = 0;
+        }
+        @foreach (var d in Model.InvoiceDetails)
+        {
+            i++;
+            <tr>
+                <td>@d.Product.MedicineName</td>
+                <td>@d.StripQuantity</td>
+                <td>@d.UnitQuantity</td>
+                <td>@d.TotalAmount.ToString("C")</td>
+
+                @* Show Total Invoice only on the first row with rowspan *@
+                @if (i == 1)
+                {
+                    <td rowspan="@rowCount" class="text-center align-middle">
+                        <strong>@Model.Total.ToString("C")</strong>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

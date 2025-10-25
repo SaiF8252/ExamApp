@@ -1,0 +1,11 @@
+﻿@{
+    if (Request.IsAjaxRequest())
+    {
+
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}

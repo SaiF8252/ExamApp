@@ -1,0 +1,45 @@
+﻿@model ExamApp.Models.Product
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this product?</h3>
+<div>
+    <h4>Product Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(model => model.MedicineName)</dt>
+        <dd>@Html.DisplayFor(model => model.MedicineName)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.ImagePath)</dt>
+        <dd>
+            @if (!string.IsNullOrEmpty(Model.ImagePath))
+            {
+                <img src="@Url.Content(Model.ImagePath)" width="150" class="img-thumbnail" />
+            }
+            else
+            {
+                <span class="text-muted">No Image</span>
+            }
+        </dd>
+
+        <dt>@Html.DisplayNameFor(model => model.StripPrice)</dt>
+        <dd>@Html.DisplayFor(model => model.StripPrice)</dd>
+        <dt>@Html.DisplayNameFor(model => model.UnitPrice)</dt>
+        <dd>@Html.DisplayFor(model => model.UnitPrice)</dd>
+    </dl>
+
+    @using (Html.BeginForm("Delete", "Product", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
+    }
+</div>

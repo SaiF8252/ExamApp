@@ -1,0 +1,52 @@
+﻿@model  ExamApp.ViewModels.InvoiceVm
+<div>
+    <hr />
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>
+                    Item
+                </th>
+                <th>
+                    UnitPrice
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    <button name="operation" value="add" class="btn btn-outline-info">Add</button>
+                </th>
+
+            </tr>
+
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.InvoiceDetails.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DropDownListFor(a => Model.InvoiceDetails[i].ItemId,
+new SelectList(ViewBag.Products, "Id", "Name", Model.InvoiceDetails[i].ItemId),
+new { Class = "form-select" })
+
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => Model.InvoiceDetails[i].ItemId, new { @class = "form-select" })
+
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => Model.InvoiceDetails[i].StripQuantity, new { @class = "form-select" })
+
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => Model.InvoiceDetails[i].UnitQuantity, new { @class = "form-select" })
+                    </td>
+                    <td>
+                        <button name="operation" value="delete-@i" class="btn btn-outline-warning ">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>

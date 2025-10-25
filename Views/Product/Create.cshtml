@@ -1,0 +1,74 @@
+﻿@model ExamApp.Models.Product
+
+@{
+    ViewBag.Title = "Create Product";
+}
+
+<h2 class="mb-4 text-center">Create New Product</h2>
+
+@using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger mb-3" })
+
+                <div class="card shadow-lg p-4">
+                    <div class="navbar-gold">
+
+                        <!-- Medicine Name -->
+                        <div class="">
+                            @Html.LabelFor(m => m.MedicineName, htmlAttributes: new { @class = "form-label fw-bold" })
+                            @Html.EditorFor(m => m.MedicineName, new { htmlAttributes = new { @class = "form-control form-control-lg" } })
+                            @Html.ValidationMessageFor(m => m.MedicineName, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Strip Price -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.StripPrice, htmlAttributes: new { @class = "form-label fw-bold" })
+                            @Html.EditorFor(m => m.StripPrice, new { htmlAttributes = new { @class = "form-control form-control-lg" } })
+                            @Html.ValidationMessageFor(m => m.StripPrice, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Available Stock -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.StockQuantity, "Available Stock (Units)", htmlAttributes: new { @class = "form-label fw-bold" })
+                            @Html.TextBoxFor(m => m.StockQuantity, new { @class = "form-control form-control-lg" })
+                            @Html.ValidationMessageFor(m => m.StockQuantity, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Strip Size -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.StripSize, htmlAttributes: new { @class = "form-label fw-bold" })
+                            @Html.EditorFor(m => m.StripSize, new { htmlAttributes = new { @class = "form-control form-control-lg" } })
+                            @Html.ValidationMessageFor(m => m.StripSize, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Unit Price -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.UnitPrice, htmlAttributes: new { @class = "form-label fw-bold" })
+                            @Html.EditorFor(m => m.UnitPrice, new { htmlAttributes = new { @class = "form-control form-control-lg" } })
+                            @Html.ValidationMessageFor(m => m.UnitPrice, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Image Upload -->
+                        <div class="mb-3">
+                            @Html.Label("Product Image", htmlAttributes: new { @class = "form-label fw-bold" })
+                            <input type="file" name="Image" class="form-control form-control-lg" />
+                            @Html.ValidationMessage("Image", "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Submit Buttons -->
+                        <div class="d-flex justify-content-between">
+                            <input type="submit" value="Save Product" class="btn btn-success btn-lg fw-bold" />
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary btn-lg fw-bold" })
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

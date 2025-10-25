@@ -1,0 +1,96 @@
+﻿ body {
+        background: #fafafa;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    .brand {
+        font-family: 'Brush Script MT', cursive;
+        font-size: 1.5rem;
+    }
+
+    .navbar-golden {
+        background: linear-gradient(45deg, #FFD700, #FFC107, #FFB300);
+    }
+
+    .feature-card {
+        border-radius: 1rem;
+        transition: transform 0.3s;
+    }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .instagram-header {
+        background: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
+        color: #fff;
+        padding: 40px;
+        border-radius: 1rem;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    footer {
+        background: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
+        color: #fff;
+        padding: 40px 0;
+    }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+.navbar-gold {
+    background-color: gold;
+    font-style: italic;
+    font-weight: bold;
+}
+.card-footer {
+    text-align: center;
+    padding: 15px 0;
+    background-color: #f8f9fa; /* subtle background */
+    border-top: 1px solid #e0e0e0;
+}
+
+    .card-footer a.custom-btn {
+        display: inline-block;
+        padding: 8px 18px;
+        margin: 0 5px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+        .card-footer a.custom-btn.edit {
+            background: #f9c74f; /* golden yellow */
+        }
+
+            .card-footer a.custom-btn.edit:hover {
+                background: #fcbf49;
+                transform: scale(1.1) rotate(-2deg);
+                box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            }
+
+        .card-footer a.custom-btn.details {
+            background: #4dabf7; /* info blue */
+        }
+
+            .card-footer a.custom-btn.details:hover {
+                background: #1c7ed6;
+                transform: scale(1.1) rotate(2deg);
+                box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            }
+
+        .card-footer a.custom-btn.delete {
+            background: #f06595; /* danger pinkish */
+        }
+
+            .card-footer a.custom-btn.delete:hover {
+                background: #d6336c;
+                transform: scale(1.1) rotate(-2deg);
+                box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            }

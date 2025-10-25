@@ -1,0 +1,36 @@
+﻿@model ExamApp.Models.Patientmaster
+
+<h2>Invoice Details for @Model.CustomerName</h2>
+<p>Date: @Model.InvoiceDate.ToString("dd/MM/yyyy")</p>
+
+<div id="invoice-content">
+    <table class="table table-bordered">
+        <thead>
+           <tr>
+    <td>Product.MedicineName</td>
+    <td>UnitPrice</td>
+    <td>Quantity</td>
+    
+</tr>
+
+        </thead>
+        <tbody>
+            @foreach (var d in Model.InvoiceDetails)
+            {
+                <tr>
+                    <td>@d.Product.MedicineName</td>
+                    <td>@d.StripQuantity</td>
+                    <td>@d.UnitQuantity </td>
+                    <td>@d.Product.UnitPrice.ToString("C")</td>
+                    <td>@((d.UnitQuantity) * d.Product.UnitPrice).ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p><strong>Total: </strong> @Model.InvoiceDetails.Sum(d => (d.UnitQuantity ?? 0) * d.Product.UnitPrice).ToString("C")</p>
+</div>
+
+
+
+

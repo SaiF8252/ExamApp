@@ -1,0 +1,109 @@
+﻿```csharp
+@model PagedList.IPagedList<ExamApp.Models.Patientmaster>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Invoice";
+}
+
+<h2>Invoices</h2>
+<p>@Html.ActionLink("Create New Invoice", "Create", null, new { @class = "btn btn-primary" })</p>
+
+@using (Html.BeginForm("Index", "Invoice", FormMethod.Get))
+{
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label>Find by Name:</label>
+            @Html.TextBox("searchString", ViewBag.CurrentFilter as string,
+                new { @class = "form-control", placeholder = "Customer Name" })
+        </div>
+        <div class="col-md-4">
+            <label>Find by Date:</label>
+            @Html.TextBox("searchDate", ViewBag.CurrentDateFilter as string,
+                new { @class = "form-control", type = "date" })
+        </div>
+        <div class="col-md-2 align-self-end">
+            <input type="submit" value="Search" class="btn btn-primary" />
+        </div>
+    </div>
+}
+
+<table class="table table-bordered ">
+    <tr>
+        <th>Date</th>
+        <th>
+            @Html.ActionLink(
+                "Customer Name",
+                "Index",
+                new
+                {
+                    sortOrder = ViewBag.NameSortParm,
+                    currentFilter = ViewBag.CurrentFilter,
+                    searchDate = ViewBag.CurrentDateFilter
+                }
+            )
+        </th>
+        <th>Salesman</th>
+        <th>Products</th>
+        <th>Total</th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var inv in Model)
+    {
+        <tr>
+            <td>@inv.InvoiceDate.ToShortDateString()</td>
+            <td>@inv.CustomerName</td>
+            <td>@inv.Salesman</td>
+            <td>
+                <ul>
+                    @foreach (var d in inv.InvoiceDetails)
+                    {
+                        <li>@d.Product.MedicineName - Strip: @d.StripQuantity, Unit: @d.UnitQuantity, Total: @d.TotalAmount.ToString("C")</li>
+                    }
+                </ul>
+            </td>
+            <td>@inv.Total.ToString("C")</td>
+            <td class="card-footer">
+                @Html.ActionLink("Edit", "Edit", new { id = inv.InvoiceId }, new { @class = "custom-btn edit" })
+
+                @Ajax.ActionLink("Details", "Details", "Invoice",
+                    new { id = inv.InvoiceId },
+                    new AjaxOptions
+                    {
+                        HttpMethod = "GET",
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "ajaxDetails",
+                        OnBegin = "showLoader",
+                        OnComplete = "hideLoader"
+                    },
+                    new { @class = "custom-btn details" })
+
+                @Html.ActionLink("Delete", "Delete", new { id = inv.InvoiceId }, new { @class = "custom-btn delete" })
+            </td>
+        </tr>
+    }
+</table>
+<br />
+@Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    sortOrder = ViewBag.CurrentSort,
+    currentFilter = ViewBag.CurrentFilter,
+    searchDate = ViewBag.CurrentDateFilter
+}))
+
+<!-- AJAX response container -->
+<div id="ajaxDetails" class="mt-3"></div>
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script>
+    function showLoader() {
+        $("#ajaxDetails").html("<p class='text-center'><img src='/Content/Images/download.jpg' alt='Loading...' /></p>");
+    }
+    function hideLoader() {
+        // Loader automatically replaced by partial
+    }
+</script>
+```

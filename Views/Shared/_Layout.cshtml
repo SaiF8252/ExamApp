@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head class="container body-content">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    @Styles.Render("~/Content/css")
+    
+    <link href="~/Content/Site.css" rel="stylesheet" />
+</head>
+<body class="instagram-header">
+    <nav class="navbar navbar-expand-sm navbar-light navbar-gold">
+        <div class="container">
+            @Html.ActionLink("Rose Pharmacy", "Index", "Product", new { area = "" }, new { @class = "navbar-brand" })
+
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav gap-3">
+                    <li class="nav-item"><a class="nav-link text-dark fw-bold" href="@Url.Action("Index","Home")">Home</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark fw-bold" href="#">About</a></li>
+                    <li  class="nav-item"><a class="nav-link text-dark fw-bold" href="#">Contact</a></li>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item"><a class="nav-link text-dark fw-bold" href="@Url.Action("Index","Product")">Products</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark fw-bold" href="@Url.Action("Index","Invoice")">Invoice</a></li>
+                    }
+                </ul>
+
+                <ul class="navbar-nav">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link " href="#">Hello, @User.Identity.Name</a>
+                        </li>
+                        <li class="nav-item">
+                            @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { @class = "d-inline" }))
+                            {
+                                <button type="submit" class="btn btn-link nav-link">Logout</button>
+                            }
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item nav-animate fw-bold">@Html.ActionLink("Login", "Login", "Account", null, new { @class = "nav-link" })</li>
+                        <li class="nav-item nav-animate fw-bold">@Html.ActionLink("Register", "Register", "Account", null, new { @class = "nav-link" })</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Rose Pharmacy</p>
+        </footer>
+    </div>
+
+    <!-- Scripts: jQuery first, then unobtrusive AJAX, then Bootstrap -->
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

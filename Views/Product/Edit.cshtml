@@ -1,0 +1,52 @@
+﻿@model ExamApp.Models.Product
+
+@{
+    ViewBag.Title = "Edit Product";
+}
+
+<h2>Edit Product</h2>
+
+@using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.ImagePath) <!-- পুরোনো image path preserve -->
+
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.MedicineName)
+        @Html.EditorFor(model => model.MedicineName, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.StripPrice)
+        @Html.EditorFor(model => model.StripPrice, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.UnitPrice)
+        @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.StockQuantity, "Available Stock")
+        @Html.TextBoxFor(m => m.StockQuantity, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.StockQuantity, "", new { @class = "text-danger" })
+    </div>
+
+
+    <div class="form-group mb-3">
+        <label>Current Image</label>
+        @if (!string.IsNullOrEmpty(Model.ImagePath))
+        {
+            <div>
+                <img src="@Url.Content(Model.ImagePath)" alt="Product Image" style="max-height: 200px;" />
+            </div>
+        }
+    </div>
+
+    <div class="form-group mb-3">
+        <label>Upload New Image</label>
+        <input type="file" name="Image" id="Image" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+}

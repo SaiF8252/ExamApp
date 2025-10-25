@@ -1,0 +1,6 @@
+﻿
+@media print {
+    .printButton, #printButton {
+        display: none;
+    }
+}
